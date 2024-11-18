@@ -38,7 +38,7 @@ async def fetch_stock_data(ticker_symbol):
             total_put_volume += puts['volume'].sum()
 
         data = stock.history(period="1d")
-        time.sleep(1)
+        time.sleep(2)
         row = {
             "Aksiya": ticker_symbol,
             "Current Price": data["Close"].iloc[0] if not data["Close"].isna().iloc[0] else 0,
@@ -111,6 +111,7 @@ async def start_info_command(update, context: ContextTypes.DEFAULT_TYPE) -> None
 
     for ticker_symbol in aksiyalar:
         try:
+            time.sleep(2)
             stock = yf.Ticker(ticker_symbol)
             options = stock.options
             total_call_volume = 0
@@ -143,7 +144,6 @@ async def start_info_command(update, context: ContextTypes.DEFAULT_TYPE) -> None
                 "Industry": stock.info.get("industry") or "Noma'lum",
             }
             malumotlar.append(row)
-            time.sleep(2)
         except Exception as e:
             print(data)
             row = {
